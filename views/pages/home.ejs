@@ -1,0 +1,235 @@
+<%- include('../partials/header') %>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+        <h1>Plan Your Perfect Journey</h1>
+        <p>Discover amazing places, find the best hotels, and create unforgettable itineraries all in one place.</p>
+        <a href="#" class="btn btn-primary">Start Planning</a>
+    </div>
+</section>
+
+<!-- Search Form -->
+<div class="container">
+    <div class="search-form, search-back">
+        <h2>Find Your Next Adventure</h2>
+        <form>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="destination">Destination</label>
+                    <input type="text" id="destination" placeholder="Where do you want to go?">
+                </div>
+                <div class="form-group">
+                    <label for="check-in">Check In</label>
+                    <input type="date" id="check-in">
+                </div>
+                <div class="form-group">
+                    <label for="check-out">Check Out</label>
+                    <input type="date" id="check-out">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="guests">Guests</label>
+                    <select id="guests">
+                        <option value="1">1 Guest</option>
+                        <option value="2">2 Guests</option>
+                        <option value="3">3 Guests</option>
+                        <option value="4">4 Guests</option>
+                        <option value="5+">5+ Guests</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="rooms">Rooms</label>
+                    <select id="rooms">
+                        <option value="1">1 Room</option>
+                        <option value="2">2 Rooms</option>
+                        <option value="3">3 Rooms</option>
+                        <option value="4+">4+ Rooms</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>&nbsp;</label>
+                    <button type="submit" class="search-btn">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</section>
+
+<!-- Features Section -->
+<section class="features">
+<div class="container">
+    <div class="section-header">
+        <h2>Why Choose JourneySync</h2>
+        <p>We offer a seamless experience to plan, customize, and manage your entire tour in one place.</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-hotel"></i>
+            </div>
+            <h3>Find Perfect Hotels</h3>
+            <p>Compare hotels based on real-time data, filter by preferences, and book directly through our platform.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-map-marked-alt"></i>
+            </div>
+            <h3>Interactive Maps</h3>
+            <p>Visualize your entire trip on interactive maps to optimize routes and discover nearby attractions.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-calendar-alt"></i>
+            </div>
+            <h3>Day-by-Day Planning</h3>
+            <p>Create detailed daily itineraries including activities, transportation, and accommodations.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Popular Destinations -->
+<section class="destinations">
+<div class="container">
+    <div class="section-header">
+        <h2>Popular Destinations</h2>
+        <p>Explore top-rated places loved by travelers around the world.</p>
+    </div>
+    <div class="destinations-grid">
+        <div class="destination-card">
+            <img src="/api/placeholder/400/200" alt="Paris" class="destination-img">
+            <div class="destination-content">
+                <h3>Paris, France</h3>
+                <p>Experience the city of lights with its iconic landmarks and romantic atmosphere.</p>
+                <div class="destination-footer">
+                    <div class="destination-price">From $799</div>
+                    <button class="explore-btn">Explore</button>
+                </div>
+            </div>
+        </div>
+        <div class="destination-card">
+            <img src="/api/placeholder/400/200" alt="Bali" class="destination-img">
+            <div class="destination-content">
+                <h3>Bali, Indonesia</h3>
+                <p>Discover tropical paradise with stunning beaches and rich cultural heritage.</p>
+                <div class="destination-footer">
+                    <div class="destination-price">From $649</div>
+                    <button class="explore-btn">Explore</button>
+                </div>
+            </div>
+        </div>
+        <div class="destination-card">
+            <img src="/api/placeholder/400/200" alt="Tokyo" class="destination-img">
+            <div class="destination-content">
+                <h3>Tokyo, Japan</h3>
+                <p>Immerse yourself in a blend of traditional culture and futuristic technology.</p>
+                <div class="destination-footer">
+                    <div class="destination-price">From $899</div>
+                    <button class="explore-btn">Explore</button>
+                </div>
+            </div>
+        </div>
+        <div class="destination-card">
+            <img src="/api/placeholder/400/200" alt="New York" class="destination-img">
+            <div class="destination-content">
+                <h3>New York, USA</h3>
+                <p>Experience the vibrant energy of the city that never sleeps.</p>
+                <div class="destination-footer">
+                    <div class="destination-price">From $749</div>
+                    <button class="explore-btn">Explore</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+<div class="container">
+    <div class="section-header">
+        <h2>How JourneySync Works</h2>
+        <p>Planning your perfect trip is easy with our simple three-step process.</p>
+    </div>
+    <div class="steps">
+        <div class="step">
+            <div class="step-number">1</div>
+            <h3>Search & Compare</h3>
+            <p>Find destinations and compare hotels based on your preferences, budget, and travel dates.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">2</div>
+            <h3>Create Itinerary</h3>
+            <p>Build a day-by-day travel plan with activities, transportation, and accommodations.</p>
+        </div>
+        <div class="step">
+            <div class="step-number">3</div>
+            <h3>Book & Enjoy</h3>
+            <p>Secure your bookings directly through our platform and enjoy your perfectly planned trip.</p>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials">
+<div class="container">
+    <div class="section-header">
+        <h2>What Our Travelers Say</h2>
+        <p>Discover why travelers love using JourneySync for their adventures.</p>
+    </div>
+    <div class="testimonials-slider">
+        <div class="testimonial">
+            <p class="testimonial-text">"JourneySync made planning our family trip to Europe so much easier! The interactive maps and day-by-day planning features saved us hours of research."</p>
+            <div class="testimonial-author">
+                <img src="/api/placeholder/50/50" alt="Sarah" class="author-img">
+                <div class="author-info">
+                    <h4>Sarah Johnson</h4>
+                    <p>Family Traveler</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="testimonial">
+            <p class="testimonial-text">"As a digital nomad, I rely on JourneySync to plan my workations. The hotel comparison tool helped me find places with great WiFi and workspaces!"</p>
+            <div class="testimonial-author">
+                <img src="/api/placeholder/50/50" alt="Mark" class="author-img">
+                <div class="author-info">
+                    <h4>Mark Davis</h4>
+                    <p>Digital Nomad</p>
+                    <div class="rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter">
+<div class="container">
+    <div class="newsletter-content">
+        <h2>Stay Updated with Travel Deals</h2>
+        <p>Subscribe to our newsletter to receive the latest travel deals, destination tips, and planning advice.</p>
+        <form class="newsletter-form">
+            <input type="email" placeholder="Your email address" class="newsletter-input" required>
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+        </form>
+    </div>
+</div>
+</section>
+<%- include('../partials/footer') %>

@@ -1,0 +1,21 @@
+<%- include('../partials/header') %>
+  <h2>Admin Dashboard</h2>
+  <h3>Users</h3>
+  <ul>
+    <% users.forEach(u => { %>
+      <li>
+        <%= u.name %> (<%= u.email %>)
+        <form method="POST" action="/admin/ban" class="inline-form">
+          <input type="hidden" name="userId" value="<%= u.id %>">
+          <button type="submit">Ban</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+  <h3>Admin Logs</h3>
+  <ul>
+    <% logs.forEach(log => { %>
+      <li><%= log.action %> - <%= log.timestamp.toLocaleString() %></li>
+    <% }) %>
+  </ul>
+<%- include('../partials/footer') %>

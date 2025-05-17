@@ -1,0 +1,57 @@
+```html
+<%- include('../partials/header') %>
+    <section class="itinerary-page">
+        <div class="itinerary-sidebar">
+            <h2>
+                <%= itineraries[0]?.tripName || 'Your Itinerary' %>
+            </h2>
+            <div class="day-selector">
+                <% (itineraries[0]?.dailyPlans || []).forEach((plan, index)=> { %>
+                    <div class="day-item <%= index === 0 ? 'active' : '' %>">Day <%= index + 1 %>
+                    </div>
+                    <% }) %>
+            </div>
+            <div class="activity-list">
+                <% if (recommendations && recommendations.length> 0) { %>
+                    <% recommendations.forEach(activity=> { %>
+                        <div class="activity-item">
+                            <div class="activity-time">N/A</div>
+                            <div class="activity-name">
+                                <%= activity.name %>
+                            </div>
+                            <div class="activity-location"><i class="fas fa-map-marker-alt"></i>
+                                <%= activity.location || 'Unknown' %>
+                            </div>
+                        </div>
+                        <% }) %>
+                            <% } else { %>
+                                <p>No recommendations available for this destination.</p>
+                                <% } %>
+            </div>
+        </div>
+        <div class="map-container">
+            <div id="map" style="height: 100%;"></div>
+        </div>
+    </section>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&callback=initMap" async
+        defer></script>
+    <script>
+        function initMap() {
+            const map = new google.maps.Map(document.getElementById('map'), {
+                center: { lat: 0, lng: 0 },
+                zoom: 2,
+            });
+            const destinations = <% - JSON.stringify(itineraries[0]?.destinations || []) %>;
+            destinations.forEach(dest => {
+                if (dest.lat && dest.lng) {
+                    new google.maps.Marker({
+                        position: { lat: parseFloat(dest.lat), lng: parseFloat(dest.lng) },
+                        map: map,
+                        title: dest.name,
+                    });
+                }
+            });
+        }
+    </script>
+    <%- include('../partials/footer') %>
+        ```
