@@ -1,41 +1,50 @@
 const express = require('express');
 const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const passport = require('passport');
+const sequelize = require('./config/db');
+const dotenv = require('dotenv');
 const path = require('path');
-const authRoutes = require('./routes/auth');
-const hotelRoutes = require('./routes/hotels');
-const itineraryRoutes = require('./routes/itineraries');
-const adminRoutes = require('./routes/admin');
-require('./config/passport');
+
+dotenv.config();
 
 const app = express();
 
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
+// Middleware
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Session configuration
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: false,
+  store: new SequelizeStore({ db: sequelize }),
 }));
+
+// Passport initialization
 app.use(passport.initialize());
 app.use(passport.session());
+require('./config/passport')(passport);
 
-app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
-});
+// Set view engine to EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views/pages'));
 
+// Routes
+app.use('/', require('./routes/auth'));
+app.use('/hotels', require('./routes/hotels'));
+app.use('/itineraries', require('./routes/itineraries'));
+app.use('/admin', require('./routes/admin'));
+
+// Home route
 app.get('/', (req, res) => {
-  res.render('pages/home', { user: req.user });
+  res.render('home', { user: req.user });
 });
 
-app.use('/', authRoutes);
-app.use('/hotels', hotelRoutes);
-app.use('/itineraries', itineraryRoutes);
-app.use('/admin', adminRoutes);
-
-app.listen(process.env.PORT || 3000, () => {
-  console.log('Server running on port 3000');
+// Sync database and start server
+sequelize.sync().then(() => {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
