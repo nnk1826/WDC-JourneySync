@@ -11,7 +11,7 @@ router.get('/signup', (req, res) => {
 router.post('/signup', async (req, res) => {
   const { firstName, lastName, email, password, confirmPassword, dob, terms, marketing } = req.body;
   if (password !== confirmPassword) return res.status(400).send('Passwords do not match');
-  if (!terms) return res.status(400).send('You must agree to the terms');
+//   if (!agreeTerms) return res.status(400).send('You must agree to the terms');
   try {
     let user = await User.findOne({ where: { email } });
     if (user) return res.status(400).send('User already exists');

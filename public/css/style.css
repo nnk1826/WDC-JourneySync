@@ -784,3 +784,38 @@ footer {
         gap: 0;
     }
 }
+
+/* Additional CSS for anchor links and smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Offset for fixed header */ 
+section[id] {
+    scroll-margin-top: 80px;
+}
+
+/* Style for anchor links  */
+.nav-links a {
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ff6b6b;
+}
+
+/* Active link indicator  */
+ .nav-links a.active {
+    color: #ff6b6b;
+    font-weight: bold;
+}
+
+/* GG MAP API IN HOME */
+#destinations-map {
+    height: 500px;
+    width: 100%;
+    margin: 2rem 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  

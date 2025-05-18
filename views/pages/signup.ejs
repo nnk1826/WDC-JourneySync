@@ -1,56 +1,239 @@
-<%- include('../partials/header') %>
+<%- include('../partials/header_login') %>
+<!-- Signup Section -->
 <section class="auth-container">
-  <div class="auth-form">
-    <a href="/" class="logo"><i class="fas fa-map-marked-alt"></i> JourneySync</a>
-    <h1>Create Your Account</h1>
-    <p>Join JourneySync to plan and book your perfect trip</p>
-    <form method="POST" action="/register">
-      <div class="form-row">
-        <div class="form-group">
-          <label for="firstName">First Name</label>
-          <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+    <div class="auth-form">
+        <a href="/" class="logo">
+            <i class="fas fa-route"></i> JourneySync
+        </a>
+        <h1>Create Your Account</h1>
+        <p>Join JourneySync to plan and book your perfect trip</p>
+
+        <form id="signupForm" action="/signup" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="firstName" placeholder="Enter your first name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="lastName" placeholder="Enter your last name" required>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-input-container">
+                    <input type="password" id="password" name="password" placeholder="Create a password" required minlength="8">
+                    <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('password')"></i>
+                </div>
+                <p class="password-requirements">
+                    Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.
+                </p>
+                <div class="password-strength-meter">
+                    <div class="strength-bar" id="strength-bar"></div>
+                </div>
+                <p class="strength-text" id="strength-text">Password strength</p>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <div class="password-input-container">
+                    <input type="password" id="confirm-password" name="confirmPassword" placeholder="Confirm your password" required>
+                    <i class="fas fa-eye-slash toggle-password" onclick="togglePasswordVisibility('confirm-password')"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="birthdate">Date of Birth</label>
+                <input type="date" id="birthdate" name="birthdate" required>
+            </div>
+
+            <div class="terms">
+                <input type="checkbox" id="agree-terms" name="agreeTerms" required>
+                <label for="agree-terms">
+                    I agree to JourneySync's <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                </label>
+            </div>
+
+            <div class="terms">
+                <input type="checkbox" id="agree-marketing" name="agreeMarketing">
+                <label for="agree-marketing">
+                    I want to receive travel deals, tips and marketing emails from JourneySync.
+                </label>
+            </div>
+
+            <button type="submit" class="auth-btn">Create Account</button>
+        </form>
+
+        <div class="auth-divider">
+            <span>OR</span>
         </div>
-        <div class="form-group">
-          <label for="lastName">Last Name</label>
-          <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+
+        <div class="auth-footer">
+            Already have an account? <a href="/">Log In</a>
         </div>
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        <p class="password-requirements">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p>
-      </div>
-      <div class="form-group">
-        <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
-      </div>
-      <div class="form-group">
-        <label for="dob">Date of Birth</label>
-        <input type="date" id="dob" name="dob" required>
-      </div>
-      <div class="terms">
-        <input type="checkbox" id="terms" name="terms" required>
-        <label for="terms">I agree to JourneySync's <a href="/terms">Terms of Service</a> and <a href="/privacy">Privacy Policy</a>.</label>
-      </div>
-      <div class="terms">
-        <input type="checkbox" id="marketing" name="marketing">
-        <label for="marketing">I want to receive travel deals, tips, and marketing emails from JourneySync.</label>
-      </div>
-      <button type="submit" class="auth-btn">Create Account</button>
-    </form>
-    <div class="auth-divider"><span>OR</span></div>
-    <div class="social-signup">
-      <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
-      <a href="#" class="social-btn twitter"><i class="fab fa-twitter"></i></a>
     </div>
-    <div class="auth-footer">
-      Already have an account? <a href="/login">Log In</a>
-    </div>
-  </div>
 </section>
+
+<!-- JavaScript for signup functionality -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', function() {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+        
+        // Set max date for birthdate (must be at least 18 years old)
+        const today = new Date();
+        const eighteenYearsAgo = new Date(today.getFullYear() - 18, today.getMonth(), today.getDate());
+        const maxDate = eighteenYearsAgo.toISOString().split('T')[0];
+        document.getElementById('birthdate').setAttribute('max', maxDate);
+        
+        // Password strength meter
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strength-bar');
+        const strengthText = document.getElementById('strength-text');
+        
+        passwordInput.addEventListener('input', function() {
+            const password = passwordInput.value;
+            let strength = 0;
+            let feedback = '';
+            
+            // Check password length
+            if (password.length >= 8) {
+                strength += 25;
+            }
+            
+            // Check for uppercase letters
+            if (/[A-Z]/.test(password)) {
+                strength += 25;
+            }
+            
+            // Check for lowercase letters
+            if (/[a-z]/.test(password)) {
+                strength += 25;
+            }
+            
+            // Check for numbers and special characters
+            if (/[0-9]/.test(password) && /[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                strength += 25;
+            }
+            
+            // Update strength bar
+            strengthBar.style.width = strength + '%';
+            
+            // Update color and text based on strength
+            if (strength <= 25) {
+                strengthBar.style.backgroundColor = '#ff4d4d'; // Red
+                feedback = 'Weak';
+            } else if (strength <= 50) {
+                strengthBar.style.backgroundColor = '#ffa64d'; // Orange
+                feedback = 'Fair';
+            } else if (strength <= 75) {
+                strengthBar.style.backgroundColor = '#ffff4d'; // Yellow
+                feedback = 'Good';
+            } else {
+                strengthBar.style.backgroundColor = '#4CAF50'; // Green
+                feedback = 'Strong';
+            }
+            
+            strengthText.textContent = 'Password strength: ' + feedback;
+        });
+        
+        // Password confirmation validation
+        const confirmPassword = document.getElementById('confirm-password');
+        
+        function validatePassword() {
+            if (password.value !== confirmPassword.value) {
+                confirmPassword.setCustomValidity("Passwords don't match");
+            } else {
+                confirmPassword.setCustomValidity('');
+            }
+        }
+        
+        password.addEventListener('change', validatePassword);
+        confirmPassword.addEventListener('keyup', validatePassword);
+    });
+    
+    // Toggle password visibility
+    function togglePasswordVisibility(inputId) {
+        const passwordInput = document.getElementById(inputId);
+        const icon = passwordInput.nextElementSibling;
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        }
+    }
+    
+    function handleSignup() {
+        const firstName = document.getElementById('first-name').value;
+        const lastName = document.getElementById('last-name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const birthdate = document.getElementById('birthdate').value;
+        const agreeTerms = document.getElementById('agree-terms').checked;
+        const agreeMarketing = document.getElementById('agree-marketing').checked;
+        
+        // Get selected travel styles
+        const travelStyles = [];
+        document.querySelectorAll('input[name="travelStyle"]:checked').forEach(checkbox => {
+            travelStyles.push(checkbox.value);
+        });
+        
+        // For demonstration purposes, we're logging the values
+        console.log("Signup attempt:", {
+            firstName,
+            lastName,
+            email,
+            passwordLength: password.length,
+            birthdate,
+            travelStyles,
+            agreeTerms,
+            agreeMarketing
+        });
+        
+        // Password validation
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasLowerCase = /[a-z]/.test(password);
+        const hasNumbers = /\d/.test(password);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        
+        if (password.length < 8) {
+            alert("Password must be at least 8 characters long.");
+            return;
+        }
+        
+        if (!(hasUpperCase && hasLowerCase && hasNumbers && hasSpecialChar)) {
+            alert("Password must contain uppercase, lowercase, number, and special character.");
+            return;
+        }
+        
+        // Here you would typically make an API call to your backend
+        // For now, we'll just simulate a successful signup
+        
+        alert("Account created successfully! Welcome to JourneySync, " + firstName + "!");
+        
+        // In a real application, you might redirect to login page or dashboard
+        window.location.href = "index.html";
+    }
+
+</script>
+
 <%- include('../partials/footer') %>

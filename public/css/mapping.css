@@ -74,6 +74,13 @@
     margin-right: 5px;
 }
 
+.background-img {
+    background: url(../images/background.jpg) no-repeat;
+    background-size: cover;
+    margin: 0;
+    padding: 0;
+}
+
 /* Hotel Search Results Page Styles */
 .results-page {
     padding: 100px 0;

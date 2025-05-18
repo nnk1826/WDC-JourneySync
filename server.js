@@ -6,7 +6,11 @@ const sequelize = require('./config/db');
 const dotenv = require('dotenv');
 const path = require('path');
 
-dotenv.config();
+// Load environment variables
+dotenv.config({ path: path.join(__dirname, '.env') });
+
+// Debug: Log to verify API key
+console.log('GOOGLE_MAPS_API_KEY:', process.env.GOOGLE_MAPS_API_KEY || 'Not loaded');
 
 const app = express();
 
@@ -35,12 +39,15 @@ app.set('views', path.join(__dirname, 'views/pages'));
 // Routes
 app.use('/', require('./routes/auth'));
 app.use('/hotels', require('./routes/hotels'));
-app.use('/itineraries', require('./routes/itineraries'));
 app.use('/admin', require('./routes/admin'));
 
 // Home route
 app.get('/', (req, res) => {
-  res.render('home', { user: req.user });
+  console.log('Rendering home with API key:', process.env.GOOGLE_MAPS_API_KEY);
+  res.render('home', {
+    user: req.user,
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY || ''
+  });
 });
 
 // Sync database and start server
