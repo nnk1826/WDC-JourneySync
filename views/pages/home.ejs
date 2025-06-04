@@ -67,7 +67,7 @@
         </div>
         <div class="destinations-grid">
             <div class="destination-card" data-destination="Paris, France">
-                <img src="/api/placeholder/400/200" alt="Paris" class="destination-img" data-place="Paris, France">
+                <img src="../images/Paris.jpg" alt="Paris" class="destination-img">
                 <div class="destination-content">
                     <h3>Paris, France</h3>
                     <p>Experience the city of lights with its iconic landmarks and romantic atmosphere.</p>
@@ -78,7 +78,7 @@
                 </div>
             </div>
             <div class="destination-card" data-destination="Bali, Indonesia">
-                <img src="/api/placeholder/400/200" alt="Bali" class="destination-img" data-place="Bali, Indonesia">
+                <img src="../images/Bali.jpg" alt="Bali" class="destination-img">
                 <div class="destination-content">
                     <h3>Bali, Indonesia</h3>
                     <p>Discover tropical paradise with stunning beaches and rich cultural heritage.</p>
@@ -89,7 +89,7 @@
                 </div>
             </div>
             <div class="destination-card" data-destination="Tokyo, Japan">
-                <img src="/api/placeholder/400/200" alt="Tokyo" class="destination-img" data-place="Tokyo, Japan">
+                <img src="../images/tokyo.jpg" alt="Tokyo" class="destination-img">
                 <div class="destination-content">
                     <h3>Tokyo, Japan</h3>
                     <p>Immerse yourself in a blend of traditional culture and futuristic technology.</p>
@@ -100,7 +100,7 @@
                 </div>
             </div>
             <div class="destination-card" data-destination="New York, USA">
-                <img src="/api/placeholder/400/200" alt="New York" class="destination-img" data-place="New York, NY, USA">
+                <img src="../images/ny.jpg" alt="New York" class="destination-img">
                 <div class="destination-content">
                     <h3>New York, USA</h3>
                     <p>Experience the vibrant energy of the city that never sleeps.</p>
@@ -112,9 +112,84 @@
             </div>
         </div>
         <!-- Interactive Map -->
-        <div id="destinations-map" aria-label="Interactive map of popular destinations"></div>
+        <div id="destinations-map" style="height: 400px; margin-top: 40px; width: 100%; border-radius: 8px;"></div>
     </div>
 </section>
+
+<!-- Google Maps JavaScript API -->
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATnmEvN5ZE5hdBZhxeiooUwdzj3JCz58U&callback=initMap"></script>
+
+<!-- Script for Google Maps integration -->
+<script>
+    function initMap() {
+        // Initialize interactive map
+        const map = new google.maps.Map(document.getElementById('destinations-map'), {
+            zoom: 2,
+            center: { lat: 0, lng: 0 },
+            zoomControl: true,
+            mapTypeControl: true,
+            streetViewControl: false,
+            fullscreenControl: true
+        });
+
+        const destinations = [
+            { 
+                name: 'Paris, France', 
+                position: { lat: 48.8566, lng: 2.3522 },
+                description: 'Experience the city of lights with its iconic landmarks.'
+            },
+            { 
+                name: 'Bali, Indonesia', 
+                position: { lat: -8.3405, lng: 115.0920 },
+                description: 'Discover tropical paradise with stunning beaches.'
+            },
+            { 
+                name: 'Tokyo, Japan', 
+                position: { lat: 35.6762, lng: 139.6503 },
+                description: 'A blend of traditional culture and futuristic technology.'
+            },
+            { 
+                name: 'New York, USA', 
+                position: { lat: 40.7128, lng: -74.0060 },
+                description: 'The vibrant energy of the city that never sleeps.'
+            }
+        ];
+
+        destinations.forEach(destination => {
+            const marker = new google.maps.Marker({
+                position: destination.position,
+                map: map,
+                title: destination.name,
+                animation: google.maps.Animation.DROP
+            });
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <div style="max-width: 200px;">
+                        <h3>${destination.name}</h3>
+                        <p>${destination.description}</p>
+                        <a href="#search-form" style="color: #1a73e8;">Plan Your Trip</a>
+                    </div>
+                `
+            });
+
+            marker.addListener('click', () => {
+                infoWindow.open(map, marker);
+                map.panTo(destination.position);
+            });
+
+            // Pan to marker when clicking Explore button
+            const card = document.querySelector(`.destination-card[data-destination="${destination.name}"] .explore-btn`);
+            if (card) {
+                card.addEventListener('click', () => {
+                    map.panTo(destination.position);
+                    map.setZoom(10);
+                    infoWindow.open(map, marker);
+                });
+            }
+        });
+    }
+</script>
 
 <!-- Features Section -->
 <section id="features" class="features">
@@ -221,6 +296,7 @@
         </div>
     </div>
 </section>
+
 
 <!-- Script for handling dynamic behavior -->
 <script>
