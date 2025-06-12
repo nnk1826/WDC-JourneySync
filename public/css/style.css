@@ -248,69 +248,69 @@ header {
 
 .destinations-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 25px;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
 }
 
 .destination-card {
-    border-radius: 8px;
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
     background-color: white;
+    position: relative;
 }
 
 .destination-card:hover {
-    transform: translateY(-5px);
-}
-
-.destination-img {
-    height: 200px;
-    width: 100%;
-    object-fit: cover;
+    transform: translateY(-8px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
 }
 
 .destination-content {
-    padding: 20px;
+    padding: 25px;
 }
 
 .destination-content h3 {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     color: var(--dark);
+    font-size: 1.3rem;
 }
 
 .destination-content p {
     color: #666;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    line-height: 1.6;
 }
 
 .destination-footer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 15px;
+    padding-top: 20px;
     border-top: 1px solid #eee;
 }
 
 .destination-price {
     font-weight: 700;
     color: var(--primary);
+    font-size: 1.1rem;
 }
 
 .explore-btn {
     background-color: var(--accent);
     color: var(--dark);
     border: none;
-    padding: 8px 15px;
-    border-radius: 4px;
-    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
 }
 
 .explore-btn:hover {
     background-color: #ffce54;
+    transform: translateY(-2px);
 }
 
 /* How It Works */
@@ -819,8 +819,83 @@ section[id] {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.destination-img {
-    height: 200px;
-    width: 100%;
+.destination-images {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+/* Caurousel img in destination cards */
+.image-carousel {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    height: 100%;
+}
+
+.carousel-image {
+    min-width: 100%;
+    height: 100%;
     object-fit: cover;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    color: var(--dark);
+    transition: all 0.3s;
+    z-index: 10;
+    opacity: 0;
+}
+
+.destination-card:hover .carousel-nav {
+    opacity: 1;
+}
+
+.carousel-nav:hover {
+    background-color: white;
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-prev {
+    left: 15px;
+}
+
+.carousel-next {
+    right: 15px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.indicator.active {
+    background-color: white;
+    transform: scale(1.2);
 }

@@ -1,368 +1,415 @@
 <%- include('../partials/header') %>
-<section class="background-img">
-    <!-- Hero Section -->
-    <section id="hero" class="hero">
+    <section class="background-img">
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="container">
+                <h1>Plan Your Perfect Journey</h1>
+                <p>Create unforgettable itineraries by finding amazing places and hotels with just one click.</p>
+                <a href="#search-form" class="btn btn-primary">Start Planning</a>
+            </div>
+        </section>
+
+        <!-- Search Form -->
         <div class="container">
-            <h1>Plan Your Perfect Journey</h1>
-            <p>Create unforgettable itineraries by finding amazing places and hotels with just one click.</p>
-            <a href="#search-form" class="btn btn-primary">Start Planning</a>
+            <div class="search-form search-back">
+                <h2>Find Your Next Adventure</h2>
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="destination">Destination</label>
+                            <input type="text" id="destination" placeholder="Where do you want to go?">
+                        </div>
+                        <div class="form-group">
+                            <label for="check-in">Check In</label>
+                            <input type="date" id="check-in">
+                        </div>
+                        <div class="form-group">
+                            <label for="check-out">Check Out</label>
+                            <input type="date" id="check-out">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="guests">Guests</label>
+                            <select id="guests">
+                                <option value="1">1 Guest</option>
+                                <option value="2">2 Guests</option>
+                                <option value="3">3 Guests</option>
+                                <option value="4">4 Guests</option>
+                                <option value="5+">5+ Guests</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="rooms">Rooms</label>
+                            <select id="rooms">
+                                <option value="1">1 Room</option>
+                                <option value="2">2 Rooms</option>
+                                <option value="3">3 Rooms</option>
+                                <option value="4+">4+ Rooms</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label> </label>
+                            <button type="submit" class="search-btn">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </section>
 
-    <!-- Search Form -->
-    <div class="container">
-        <div class="search-form search-back">
-            <h2>Find Your Next Adventure</h2>
-            <form>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="destination">Destination</label>
-                        <input type="text" id="destination" placeholder="Where do you want to go?">
+    <!-- Popular Destinations -->
+    <section id="destinations" class="destinations">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Destinations</h2>
+                <p>Explore top-rated places loved by travelers around the world.</p>
+            </div>
+            <div class="destinations-grid">
+                <div class="destination-card" data-destination="Paris, France">
+                    <div class="destination-images">
+                        <div class="image-carousel">
+                            <img src="https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Eiffel Tower" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1549144511-f099e773c147?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Louvre Museum" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Seine River" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1520637836862-4d197d17c50a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Champs-Élysées" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1514298230410-23515c19eb5c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Montmartre" class="carousel-image">
+                        </div>
+                        <button class="carousel-nav carousel-prev" onclick="previousImage(this)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-nav carousel-next" onclick="nextImage(this)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <div class="carousel-indicators">
+                            <span class="indicator active" onclick="currentImage(this, 0)"></span>
+                            <span class="indicator" onclick="currentImage(this, 1)"></span>
+                            <span class="indicator" onclick="currentImage(this, 2)"></span>
+                            <span class="indicator" onclick="currentImage(this, 3)"></span>
+                            <span class="indicator" onclick="currentImage(this, 4)"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="check-in">Check In</label>
-                        <input type="date" id="check-in">
-                    </div>
-                    <div class="form-group">
-                        <label for="check-out">Check Out</label>
-                        <input type="date" id="check-out">
+                    <div class="destination-content">
+                        <h3>Paris, France</h3>
+                        <p>Experience the city of lights with its iconic landmarks and romantic atmosphere.</p>
+                        <div class="destination-footer">
+                            <div class="destination-price">From $799</div>
+                            <button class="explore-btn">Explore</button>
+                        </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="guests">Guests</label>
-                        <select id="guests">
-                            <option value="1">1 Guest</option>
-                            <option value="2">2 Guests</option>
-                            <option value="3">3 Guests</option>
-                            <option value="4">4 Guests</option>
-                            <option value="5+">5+ Guests</option>
-                        </select>
+
+                <div class="destination-card" data-destination="Bali, Indonesia">
+                    <div class="destination-images">
+                        <div class="image-carousel">
+                            <img src="https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Bali Beach" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Rice Terraces" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1555400292-c3ee24e0921a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Temple" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1604999333679-b86d54738315?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Volcano" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Cultural Dance" class="carousel-image">
+                        </div>
+                        <button class="carousel-nav carousel-prev" onclick="previousImage(this)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-nav carousel-next" onclick="nextImage(this)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <div class="carousel-indicators">
+                            <span class="indicator active" onclick="currentImage(this, 0)"></span>
+                            <span class="indicator" onclick="currentImage(this, 1)"></span>
+                            <span class="indicator" onclick="currentImage(this, 2)"></span>
+                            <span class="indicator" onclick="currentImage(this, 3)"></span>
+                            <span class="indicator" onclick="currentImage(this, 4)"></span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="rooms">Rooms</label>
-                        <select id="rooms">
-                            <option value="1">1 Room</option>
-                            <option value="2">2 Rooms</option>
-                            <option value="3">3 Rooms</option>
-                            <option value="4+">4+ Rooms</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label> </label>
-                        <button type="submit" class="search-btn">Search</button>
+                    <div class="destination-content">
+                        <h3>Bali, Indonesia</h3>
+                        <p>Discover tropical paradise with stunning beaches and rich cultural heritage.</p>
+                        <div class="destination-footer">
+                            <div class="destination-price">From $649</div>
+                            <button class="explore-btn">Explore</button>
+                        </div>
                     </div>
                 </div>
-            </form>
+
+                <div class="destination-card" data-destination="Tokyo, Japan">
+                    <div class="destination-images">
+                        <div class="image-carousel">
+                            <img src="https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Tokyo Skyline" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1513407030348-c983a97b98d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Cherry Blossoms" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1503899036084-c55cdd92da26?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Traditional Temple" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1542051841857-5f90071e7989?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Shibuya Crossing" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1480796927426-f609979314bd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Tokyo Tower" class="carousel-image">
+                        </div>
+                        <button class="carousel-nav carousel-prev" onclick="previousImage(this)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-nav carousel-next" onclick="nextImage(this)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <div class="carousel-indicators">
+                            <span class="indicator active" onclick="currentImage(this, 0)"></span>
+                            <span class="indicator" onclick="currentImage(this, 1)"></span>
+                            <span class="indicator" onclick="currentImage(this, 2)"></span>
+                            <span class="indicator" onclick="currentImage(this, 3)"></span>
+                            <span class="indicator" onclick="currentImage(this, 4)"></span>
+                        </div>
+                    </div>
+                    <div class="destination-content">
+                        <h3>Tokyo, Japan</h3>
+                        <p>Immerse yourself in a blend of traditional culture and futuristic technology.</p>
+                        <div class="destination-footer">
+                            <div class="destination-price">From $899</div>
+                            <button class="explore-btn">Explore</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="destination-card" data-destination="New York, USA">
+                    <div class="destination-images">
+                        <div class="image-carousel">
+                            <img src="https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Manhattan Skyline" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1485871981521-5b1fd3805eee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Central Park" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1508973379184-7517410fb50a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Brooklyn Bridge" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1606779584991-c69b96e7fe29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Times Square" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1518081012717-02d53e9bfd18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Statue of Liberty" class="carousel-image">
+                        </div>
+                        <button class="carousel-nav carousel-prev" onclick="previousImage(this)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="carousel-nav carousel-next" onclick="nextImage(this)">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                        <div class="carousel-indicators">
+                            <span class="indicator active" onclick="currentImage(this, 0)"></span>
+                            <span class="indicator" onclick="currentImage(this, 1)"></span>
+                            <span class="indicator" onclick="currentImage(this, 2)"></span>
+                            <span class="indicator" onclick="currentImage(this, 3)"></span>
+                            <span class="indicator" onclick="currentImage(this, 4)"></span>
+                        </div>
+                    </div>
+                    <div class="destination-content">
+                        <h3>New York, USA</h3>
+                        <p>Experience the vibrant energy of the city that never sleeps.</p>
+                        <div class="destination-footer">
+                            <div class="destination-price">From $749</div>
+                            <button class="explore-btn">Explore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Interactive Map -->
+            <div id="destinations-map" style="height: 400px; margin-top: 40px; width: 100%; border-radius: 8px;"></div>
         </div>
-    </div>
-</section>
+    </section>
+    
+    <!-- Load map logic -->
+    <script src="/js/map.js"></script>
 
-<!-- Popular Destinations -->
-<section id="destinations" class="destinations">
-    <div class="container">
-        <div class="section-header">
-            <h2>Popular Destinations</h2>
-            <p>Explore top-rated places loved by travelers around the world.</p>
-        </div>
-        <div class="destinations-grid">
-            <div class="destination-card" data-destination="Paris, France">
-                <img src="../images/Paris.jpg" alt="Paris" class="destination-img">
-                <div class="destination-content">
-                    <h3>Paris, France</h3>
-                    <p>Experience the city of lights with its iconic landmarks and romantic atmosphere.</p>
-                    <div class="destination-footer">
-                        <div class="destination-price">From $799</div>
-                        <button class="explore-btn">Explore</button>
-                    </div>
-                </div>
+    <!-- Google Maps JavaScript API -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATnmEvN5ZE5hdBZhxeiooUwdzj3JCz58U&"></script>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose JourneySync</h2>
+                <p>We offer an unforgettable experience to plan, customize, and manage your entire tour in just few
+                    clicks.</p>
             </div>
-            <div class="destination-card" data-destination="Bali, Indonesia">
-                <img src="../images/Bali.jpg" alt="Bali" class="destination-img">
-                <div class="destination-content">
-                    <h3>Bali, Indonesia</h3>
-                    <p>Discover tropical paradise with stunning beaches and rich cultural heritage.</p>
-                    <div class="destination-footer">
-                        <div class="destination-price">From $649</div>
-                        <button class="explore-btn">Explore</button>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hotel"></i>
                     </div>
+                    <h3>Find Perfect Hotels</h3>
+                    <p>Compare hotels based on current status, filter by preferences, and book directly through our
+                        platform.</p>
                 </div>
-            </div>
-            <div class="destination-card" data-destination="Tokyo, Japan">
-                <img src="../images/tokyo.jpg" alt="Tokyo" class="destination-img">
-                <div class="destination-content">
-                    <h3>Tokyo, Japan</h3>
-                    <p>Immerse yourself in a blend of traditional culture and futuristic technology.</p>
-                    <div class="destination-footer">
-                        <div class="destination-price">From $899</div>
-                        <button class="explore-btn">Explore</button>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marked-alt"></i>
                     </div>
+                    <h3>Interactive Maps</h3>
+                    <p>Visualize your entire trip on interactive maps to optimize routes and discover nearby
+                        attractions.</p>
                 </div>
-            </div>
-            <div class="destination-card" data-destination="New York, USA">
-                <img src="../images/ny.jpg" alt="New York" class="destination-img">
-                <div class="destination-content">
-                    <h3>New York, USA</h3>
-                    <p>Experience the vibrant energy of the city that never sleeps.</p>
-                    <div class="destination-footer">
-                        <div class="destination-price">From $749</div>
-                        <button class="explore-btn">Explore</button>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-alt"></i>
                     </div>
+                    <h3>Day-by-Day Planning</h3>
+                    <p>Create detailed daily itineraries including activities, transportation, and accommodations.</p>
                 </div>
             </div>
         </div>
-        <!-- Interactive Map -->
-        <div id="destinations-map" style="height: 400px; margin-top: 40px; width: 100%; border-radius: 8px;"></div>
-    </div>
-</section>
+    </section>
 
-<!-- Google Maps JavaScript API -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATnmEvN5ZE5hdBZhxeiooUwdzj3JCz58U&callback=initMap"></script>
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-header">
+                <h2>How JourneySync Works</h2>
+                <p>Planning your perfect trip is easy with our simple three-step process.</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Search & Compare</h3>
+                    <p>Find destinations and compare hotels based on your preferences, budget, and travel dates.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Create Itinerary</h3>
+                    <p>Build a day-by-day travel plan with destinations, activities, transportation, and accommodations.
+                    </p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Book & Enjoy</h3>
+                    <p>Secure your bookings directly through our platform and enjoy your trip.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-<!-- Script for Google Maps integration -->
-<script>
-    function initMap() {
-        // Initialize interactive map
-        const map = new google.maps.Map(document.getElementById('destinations-map'), {
-            zoom: 2,
-            center: { lat: 0, lng: 0 },
-            zoomControl: true,
-            mapTypeControl: true,
-            streetViewControl: false,
-            fullscreenControl: true
-        });
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our Travelers Say</h2>
+                <p>Discover why travelers love using JourneySync for their adventures.</p>
+            </div>
+            <div class="testimonials-slider">
+                <div class="testimonial">
+                    <p class="testimonial-text">"JourneySync made planning our family trip to Australia so much easier!
+                        The interactive maps, day-by-day planning features, and recommendations saved our hours of
+                        research."</p>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/50/50" alt="Joe" class="author-img">
+                        <div class="author-info">
+                            <h4>Joe Root</h4>
+                            <p>Family Traveler</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">"As a digital nomad, I completely rely on JourneySync to plan my
+                        workations since its comparison tool helps me find places with great WiFi, workspaces, and other
+                        facilities!"</p>
+                    <div class="testimonial-author">
+                        <img src="/api/placeholder/50/50" alt="Mark" class="author-img">
+                        <div class="author-info">
+                            <h4>Mark Salt</h4>
+                            <p>Nomad</p>
+                            <div class="rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        const destinations = [
-            { 
-                name: 'Paris, France', 
-                position: { lat: 48.8566, lng: 2.3522 },
-                description: 'Experience the city of lights with its iconic landmarks.'
-            },
-            { 
-                name: 'Bali, Indonesia', 
-                position: { lat: -8.3405, lng: 115.0920 },
-                description: 'Discover tropical paradise with stunning beaches.'
-            },
-            { 
-                name: 'Tokyo, Japan', 
-                position: { lat: 35.6762, lng: 139.6503 },
-                description: 'A blend of traditional culture and futuristic technology.'
-            },
-            { 
-                name: 'New York, USA', 
-                position: { lat: 40.7128, lng: -74.0060 },
-                description: 'The vibrant energy of the city that never sleeps.'
-            }
-        ];
 
-        destinations.forEach(destination => {
-            const marker = new google.maps.Marker({
-                position: destination.position,
-                map: map,
-                title: destination.name,
-                animation: google.maps.Animation.DROP
+    <!-- Script for handling dynamic behavior -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set minimum date for date inputs to today
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('check-in').setAttribute('min', today);
+            document.getElementById('check-out').setAttribute('min', today);
+
+            // Set default dates (today and tomorrow)
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+            document.getElementById('check-in').value = today;
+            document.getElementById('check-out').value = tomorrowStr;
+
+            // Ensure check-out is always after check-in
+            document.getElementById('check-in').addEventListener('change', function () {
+                const checkInDate = new Date(this.value);
+                const checkOutDate = new Date(document.getElementById('check-out').value);
+
+                if (checkOutDate <= checkInDate) {
+                    const nextDay = new Date(checkInDate);
+                    nextDay.setDate(nextDay.getDate() + 1);
+                    document.getElementById('check-out').value = nextDay.toISOString().split('T')[0];
+                }
+
+                document.getElementById('check-out').setAttribute('min', this.value);
             });
 
-            const infoWindow = new google.maps.InfoWindow({
-                content: `
-                    <div style="max-width: 200px;">
-                        <h3>${destination.name}</h3>
-                        <p>${destination.description}</p>
-                        <a href="#search-form" style="color: #1a73e8;">Plan Your Trip</a>
-                    </div>
-                `
-            });
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
 
-            marker.addListener('click', () => {
-                infoWindow.open(map, marker);
-                map.panTo(destination.position);
-            });
-
-            // Pan to marker when clicking Explore button
-            const card = document.querySelector(`.destination-card[data-destination="${destination.name}"] .explore-btn`);
-            if (card) {
-                card.addEventListener('click', () => {
-                    map.panTo(destination.position);
-                    map.setZoom(10);
-                    infoWindow.open(map, marker);
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function () {
+                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
                 });
             }
-        });
-    }
-</script>
 
-<!-- Features Section -->
-<section id="features" class="features">
-    <div class="container">
-        <div class="section-header">
-            <h2>Why Choose JourneySync</h2>
-            <p>We offer an unforgettable experience to plan, customize, and manage your entire tour in just few clicks.</p>
-        </div>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-hotel"></i>
-                </div>
-                <h3>Find Perfect Hotels</h3>
-                <p>Compare hotels based on current status, filter by preferences, and book directly through our platform.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-map-marked-alt"></i>
-                </div>
-                <h3>Interactive Maps</h3>
-                <p>Visualize your entire trip on interactive maps to optimize routes and discover nearby attractions.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-calendar-alt"></i>
-                </div>
-                <h3>Day-by-Day Planning</h3>
-                <p>Create detailed daily itineraries including activities, transportation, and accommodations.</p>
-            </div>
-        </div>
-    </div>
-</section>
+            // Add active class to nav links based on scroll position
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('.nav-links a');
 
-<!-- How It Works -->
-<section id="how-it-works" class="how-it-works">
-    <div class="container">
-        <div class="section-header">
-            <h2>How JourneySync Works</h2>
-            <p>Planning your perfect trip is easy with our simple three-step process.</p>
-        </div>
-        <div class="steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>Search & Compare</h3>
-                <p>Find destinations and compare hotels based on your preferences, budget, and travel dates.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>Create Itinerary</h3>
-                <p>Build a day-by-day travel plan with destinations, activities, transportation, and accommodations.</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>Book & Enjoy</h3>
-                <p>Secure your bookings directly through our platform and enjoy your trip.</p>
-            </div>
-        </div>
-    </div>
-</section>
+            function highlightNavItem() {
+                const scrollPosition = window.scrollY;
 
-<!-- Testimonials -->
-<section id="testimonials" class="testimonials">
-    <div class="container">
-        <div class="section-header">
-            <h2>What Our Travelers Say</h2>
-            <p>Discover why travelers love using JourneySync for their adventures.</p>
-        </div>
-        <div class="testimonials-slider">
-            <div class="testimonial">
-                <p class="testimonial-text">"JourneySync made planning our family trip to Australia so much easier! The interactive maps, day-by-day planning features, and recommendations saved our hours of research."</p>
-                <div class="testimonial-author">
-                    <img src="/api/placeholder/50/50" alt="Joe" class="author-img">
-                    <div class="author-info">
-                        <h4>Joe Root</h4>
-                        <p>Family Traveler</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial">
-                <p class="testimonial-text">"As a digital nomad, I completely rely on JourneySync to plan my workations since its comparison tool helps me find places with great WiFi, workspaces, and other facilities!"</p>
-                <div class="testimonial-author">
-                    <img src="/api/placeholder/50/50" alt="Mark" class="author-img">
-                    <div class="author-info">
-                        <h4>Mark Salt</h4>
-                        <p>Nomad</p>
-                        <div class="rating">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 100;
+                    const sectionHeight = section.offsetHeight;
+                    const sectionId = section.getAttribute('id');
 
-
-<!-- Script for handling dynamic behavior -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Set minimum date for date inputs to today
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById('check-in').setAttribute('min', today);
-        document.getElementById('check-out').setAttribute('min', today);
-        
-        // Set default dates (today and tomorrow)
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1);
-        const tomorrowStr = tomorrow.toISOString().split('T')[0];
-        
-        document.getElementById('check-in').value = today;
-        document.getElementById('check-out').value = tomorrowStr;
-        
-        // Ensure check-out is always after check-in
-        document.getElementById('check-in').addEventListener('change', function() {
-            const checkInDate = new Date(this.value);
-            const checkOutDate = new Date(document.getElementById('check-out').value);
-            
-            if (checkOutDate <= checkInDate) {
-                const nextDay = new Date(checkInDate);
-                nextDay.setDate(nextDay.getDate() + 1);
-                document.getElementById('check-out').value = nextDay.toISOString().split('T')[0];
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                        navItems.forEach(item => {
+                            item.classList.remove('active');
+                            if (item.getAttribute('href') === '#' + sectionId) {
+                                item.classList.add('active');
+                            }
+                        });
+                    }
+                });
             }
-            
-            document.getElementById('check-out').setAttribute('min', this.value);
-        });
 
-        // Mobile menu toggle
-        const mobileMenuBtn = document.querySelector('.mobile-menu');
-        const navLinks = document.querySelector('.nav-links');
-        
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', function() {
-                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
-            });
-        }
-        
-        // Add active class to nav links based on scroll position
-        const sections = document.querySelectorAll('section[id]');
-        const navItems = document.querySelectorAll('.nav-links a');
-        
-        function highlightNavItem() {
-            const scrollPosition = window.scrollY;
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop - 100;
-                const sectionHeight = section.offsetHeight;
-                const sectionId = section.getAttribute('id');
-                
-                if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    navItems.forEach(item => {
-                        item.classList.remove('active');
-                        if (item.getAttribute('href') === '#' + sectionId) {
-                            item.classList.add('active');
-                        }
-                    });
-                }
-            });
-        }
-        
-        window.addEventListener('scroll', highlightNavItem);
-        highlightNavItem(); // Run once on page load
-    });
-</script>
-<%- include('../partials/footer') %>
+            window.addEventListener('scroll', highlightNavItem);
+            highlightNavItem(); // Run once on page load
+        });
+    </script>
+    <%- include('../partials/footer') %>
