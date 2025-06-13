@@ -1,0 +1,33 @@
+<%- include('../partials/header') %>
+<body>
+  <h1>Discover <%= place %></h1>
+
+  <h2> Hotels</h2>
+  <ul>
+    <% hotels.forEach(hotel => { %>
+      <li><%= hotel.name %> - <%= hotel.price %></li>
+    <% }); %>
+  </ul>
+
+  <h2> Packages</h2>
+  <ul>
+    <% packages.forEach(pkg => { %>
+      <li><%= pkg.title %>: <%= pkg.details %></li>
+    <% }); %>
+  </ul>
+
+  <h2> Nearby Attractions</h2>
+  <ul>
+    <% attractions.forEach(place => { %>
+      <li><%= place %></li>
+    <% }); %>
+  </ul>
+
+  <h2> Restaurants</h2>
+  <ul>
+    <% restaurants.forEach(r => { %>
+      <li><%= r %></li>
+    <% }); %>
+  </ul>
+</body>
+<%- include('../partials/header') %>

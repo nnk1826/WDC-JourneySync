@@ -9,8 +9,9 @@ const path = require('path');
 // Load environment variables
 dotenv.config({ path: path.join(__dirname, '.env') });
 
-// Debug: Log to verify API key
+// Debug: Log to verify API keys
 console.log('GOOGLE_MAPS_API_KEY:', process.env.GOOGLE_MAPS_API_KEY || 'Not loaded');
+console.log('AMADEUS_API_KEY:', process.env.AMADEUS_API_KEY || 'Not loaded');
 
 const app = express();
 
@@ -38,8 +39,17 @@ app.set('views', path.join(__dirname, 'views/pages'));
 
 // Routes
 app.use('/', require('./routes/auth'));
-app.use('/hotels', require('./routes/hotels'));
 app.use('/admin', require('./routes/admin'));
+app.use('/flights', require('./routes/flights'));
+app.use('/hotels', require('./routes/hotels'));
+
+// Itinerary route
+app.get('/itinerary', (req, res) => {
+  res.render('itinerary', {
+    user: req.user,
+    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY || ''
+  });
+});
 
 // Home route
 app.get('/', (req, res) => {

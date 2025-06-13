@@ -5,51 +5,64 @@
             <div class="container">
                 <h1>Plan Your Perfect Journey</h1>
                 <p>Create unforgettable itineraries by finding amazing places and hotels with just one click.</p>
-                <a href="#search-form" class="btn btn-primary">Start Planning</a>
             </div>
         </section>
 
-        <!-- Search Form -->
+  <!-- Search Form -->
         <div class="container">
             <div class="search-form search-back">
                 <h2>Find Your Next Adventure</h2>
-                <form>
+                <form id="travel-search-form">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="destination">Destination</label>
                             <input type="text" id="destination" placeholder="Where do you want to go?">
                         </div>
                         <div class="form-group">
-                            <label for="check-in">Check In</label>
+                            <label for="check-in">Start Date</label>
                             <input type="date" id="check-in">
                         </div>
                         <div class="form-group">
-                            <label for="check-out">Check Out</label>
+                            <label for="check-out">End Date</label>
                             <input type="date" id="check-out">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="guests">Guests</label>
-                            <select id="guests">
-                                <option value="1">1 Guest</option>
-                                <option value="2">2 Guests</option>
-                                <option value="3">3 Guests</option>
-                                <option value="4">4 Guests</option>
-                                <option value="5+">5+ Guests</option>
+                            <label for="adults">Adults</label>
+                            <select id="adults">
+                                <option value="1" selected="selected">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="10+">10+</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="rooms">Rooms</label>
-                            <select id="rooms">
-                                <option value="1">1 Room</option>
-                                <option value="2">2 Rooms</option>
-                                <option value="3">3 Rooms</option>
-                                <option value="4+">4+ Rooms</option>
+                            <label for="kids">Kids</label>
+                            <select id="kids">
+                                <option value="0" selected="selected">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="10+">10+</option>
                             </select>
                         </div>
                         <div class="form-group">
-                            <label> </label>
+                            <label>&nbsp;</label>
                             <button type="submit" class="search-btn">Search</button>
                         </div>
                     </div>
@@ -69,8 +82,8 @@
                 <div class="destination-card" data-destination="Paris, France">
                     <div class="destination-images">
                         <div class="image-carousel">
-                            <img src="https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                                alt="Eiffel Tower" class="carousel-image">
+                            <img src="https://images.unsplash.com/photo-1549144511-f099e773c147?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                                alt="Louvre Museum" class="carousel-image">
                             <img src="https://images.unsplash.com/photo-1549144511-f099e773c147?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                                 alt="Louvre Museum" class="carousel-image">
                             <img src="https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -222,13 +235,6 @@
             <div id="destinations-map" style="height: 400px; margin-top: 40px; width: 100%; border-radius: 8px;"></div>
         </div>
     </section>
-    
-    <!-- Load map logic -->
-    <script src="/js/map.js"></script>
-
-    <!-- Google Maps JavaScript API -->
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyATnmEvN5ZE5hdBZhxeiooUwdzj3JCz58U&"></script>
 
     <!-- Features Section -->
     <section id="features" class="features">
@@ -344,72 +350,123 @@
         </div>
     </section>
 
-
-    <!-- Script for handling dynamic behavior -->
+    <!-- Carousel and page functionality -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+         document.getElementById('travel-search-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            window.location.href = '/itinerary';
+        });
+
+            // Carousel functions
+        function previousImage(button) {
+            const carousel = button.closest(".destination-images").querySelector(".image-carousel");
+            const images = carousel.querySelectorAll(".carousel-image");
+            const indicators = carousel.closest(".destination-images").querySelectorAll(".indicator");
+            let currentIndex = Array.from(indicators).findIndex(ind => ind.classList.contains("active"));
+            indicators[currentIndex].classList.remove("active");
+            images[currentIndex].style.display = "none";
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            images[currentIndex].style.display = "block";
+            indicators[currentIndex].classList.add("active");
+        }
+
+        function nextImage(button) {
+            const carousel = button.closest(".destination-images").querySelector(".image-carousel");
+            const images = carousel.querySelectorAll(".carousel-image");
+            const indicators = carousel.closest(".destination-images").querySelectorAll(".indicator");
+            let currentIndex = Array.from(indicators).findIndex(ind => ind.classList.contains("active"));
+            indicators[currentIndex].classList.remove("active");
+            images[currentIndex].style.display = "none";
+            currentIndex = (currentIndex + 1) % images.length;
+            images[currentIndex].style.display = "block";
+            indicators[currentIndex].classList.add("active");
+        }
+
+        function currentImage(indicator, index) {
+            const carousel = indicator.closest(".destination-images").querySelector(".image-carousel");
+            const images = carousel.querySelectorAll(".carousel-image");
+            const indicators = carousel.closest(".destination-images").querySelectorAll(".indicator");
+            indicators.forEach(ind => ind.classList.remove("active"));
+            images.forEach(img => img.style.display = "none");
+            images[index].style.display = "block";
+            indicators[index].classList.add("active");
+        }
+
+        // Initialize carousels and other functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initialize carousels
+            document.querySelectorAll(".image-carousel").forEach(carousel => {
+                const images = carousel.querySelectorAll(".carousel-image");
+                const indicators = carousel.closest(".destination-images").querySelectorAll(".indicator");
+                images.forEach((img, index) => {
+                    img.style.display = index === 0 ? "block" : "none";
+                });
+                if (indicators[0]) indicators[0].classList.add("active");
+            });
+
             // Set minimum date for date inputs to today
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('check-in').setAttribute('min', today);
-            document.getElementById('check-out').setAttribute('min', today);
+            const today = new Date().toISOString().split("T")[0];
+            document.getElementById("check-in").setAttribute("min", today);
+            document.getElementById("check-out").setAttribute("min", today);
 
             // Set default dates (today and tomorrow)
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
-            const tomorrowStr = tomorrow.toISOString().split('T')[0];
-
-            document.getElementById('check-in').value = today;
-            document.getElementById('check-out').value = tomorrowStr;
+            const tomorrowStr = tomorrow.toISOString().split("T")[0];
+            document.getElementById("check-in").value = today;
+            document.getElementById("check-out").value = tomorrowStr;
 
             // Ensure check-out is always after check-in
-            document.getElementById('check-in').addEventListener('change', function () {
+            document.getElementById("check-in").addEventListener("change", function () {
                 const checkInDate = new Date(this.value);
-                const checkOutDate = new Date(document.getElementById('check-out').value);
-
+                const checkOutDate = new Date(document.getElementById("check-out").value);
                 if (checkOutDate <= checkInDate) {
                     const nextDay = new Date(checkInDate);
                     nextDay.setDate(nextDay.getDate() + 1);
-                    document.getElementById('check-out').value = nextDay.toISOString().split('T')[0];
+                    document.getElementById("check-out").value = nextDay.toISOString().split("T")[0];
                 }
-
-                document.getElementById('check-out').setAttribute('min', this.value);
+                document.getElementById("check-out").setAttribute("min", this.value);
             });
 
             // Mobile menu toggle
-            const mobileMenuBtn = document.querySelector('.mobile-menu');
-            const navLinks = document.querySelector('.nav-links');
-
+            const mobileMenuBtn = document.querySelector(".mobile-menu");
+            const navLinks = document.querySelector(".nav-links");
             if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', function () {
-                    navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                mobileMenuBtn.addEventListener("click", function () {
+                    navLinks.style.display = navLinks.style.display === "flex" ? "none" : "flex";
                 });
             }
 
             // Add active class to nav links based on scroll position
-            const sections = document.querySelectorAll('section[id]');
-            const navItems = document.querySelectorAll('.nav-links a');
-
+            const sections = document.querySelectorAll("section[id]");
+            const navItems = document.querySelectorAll(".nav-links a");
             function highlightNavItem() {
                 const scrollPosition = window.scrollY;
-
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop - 100;
                     const sectionHeight = section.offsetHeight;
-                    const sectionId = section.getAttribute('id');
-
+                    const sectionId = section.getAttribute("id");
                     if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
                         navItems.forEach(item => {
-                            item.classList.remove('active');
-                            if (item.getAttribute('href') === '#' + sectionId) {
-                                item.classList.add('active');
+                            item.classList.remove("active");
+                            if (item.getAttribute("href") === "#" + sectionId) {
+                                item.classList.add("active");
                             }
                         });
                     }
                 });
             }
-
-            window.addEventListener('scroll', highlightNavItem);
-            highlightNavItem(); // Run once on page load
+            window.addEventListener("scroll", highlightNavItem);
+            highlightNavItem();
         });
     </script>
+
+    <!-- Load map logic -->
+    <script src="/js/maps.js"></script>
+
+    <!-- Google Maps JavaScript API -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqYh_UoIOd3tiYi3VTpA3SjmMJ5BprsQ0&loading=async&callback=initMap">
+        </script>
+
     <%- include('../partials/footer') %>
