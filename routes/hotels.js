@@ -2,6 +2,11 @@ const express = require('express');
 const router = express.Router();
 const Amadeus = require('amadeus');
 
+const amadeus = new Amadeus({
+  clientId: process.env.AMADEUS_API_KEY,
+  clientSecret: process.env.AMADEUS_API_SECRET
+});
+
 router.get('/', async (req, res) => {
   try {
     const { cityCode } = req.query;
