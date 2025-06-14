@@ -1059,3 +1059,21 @@ section[id] {
     background-color: #ffeaea;
     color: var(--danger);
 }
+
+.pagination-btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+.pagination-btn.active {
+    background: #007bff;
+    color: white;
+    border-color: #007bff;
+}
+
+.pagination-btn:hover {
+    background: #e9ecef;
+}

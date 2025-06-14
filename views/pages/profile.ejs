@@ -1,0 +1,32 @@
+<%- include('../partials/header_dashboard') %>
+<section class="auth-container">
+    <div class="auth-form">
+        <a href="/" class="logo">
+            <i class="fas fa-route"></i> JourneySync
+        </a>
+        <h1>My Profile</h1>
+        <% if (User) { %>
+            <div class="profile-display">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" name="firstname" value="<%= User.firstname || '' %>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" name="lastname" value="<%= User.lastname || '' %>" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" value="<%= User.email || '' %>" readonly>
+                </div>
+            </div>
+            <div class="profile-actions">
+                <a href="/editProfile" class="auth-btn edit-btn">Edit Details</a>
+                <a href="/changePassword" class="auth-btn change-pass-btn">Change Password</a>
+            </div>
+        <% } else { %>
+            <p>User not found or not logged in. Please <a href="/login">log in</a>.</p>
+        <% } %>
+    </div>
+</section>
+<%- include('../partials/footer') %>

@@ -1,76 +1,28 @@
 <%- include('../partials/header_after') %>
     <section class="background-img">
         <div class="container">
-            <!-- Flight Search -->
-            <div class="search-form search-back">
-                <h2>Find Your Flight</h2>
-                <form id="flight-search-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="origin">Origin</label>
-                            <input type="text" id="origin" placeholder="Enter origin city (e.g., NYC)" required>
-                            <div class="autocomplete-suggestions" id="origin-suggestions"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="destination">Destination</label>
-                            <input type="text" id="destination" placeholder="Enter destination city (e.g., PAR)" required>
-                            <div class="autocomplete-suggestions" id="destination-suggestions"></div>
-                        </div>
-                        <div class="form-group">
-                            <label for="check-in">Departure</label>
-                            <input type="date" id="check-in" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="check-out">Return</label>
-                            <input type="date" id="check-out" required>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="guests">Guests</label>
-                            <select id="guests" required>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>&nbsp;</label>
-                            <button type="submit" class="search-btn">Search Flights</button>
-                        </div>
-                    </div>
-                </form>
-                <div id="flight-results" style="display: none; margin-top: 20px;">
-                    <h3>Flight Results</h3>
-                    <div id="flight-list"></div>
-                    <div id="flight-pagination" style="margin-top: 20px; text-align: center;"></div>
-                </div>
-            </div>
-
             <!-- Hotel Search -->
-            <div class="search-form search-back" style="margin-top: 20px;">
+            <div class="search-form search-back">
                 <h2>Find Your Hotel</h2>
                 <form id="hotel-search-form">
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="hotel-city">City Code</label>
-                            <input type="text" id="hotel-city" placeholder="Enter city code (e.g., PAR)" required>
+                            <label for="hotel-city">City</label>
+                            <input type="text" id="hotel-city" placeholder="Destination" required>
                             <div class="autocomplete-suggestions" id="hotel-city-suggestions"></div>
                         </div>
                         <div class="form-group">
-                            <label for="hotel-check-in">Check-in</label>
+                            <label for="hotel-check-in">Start date</label>
                             <input type="date" id="hotel-check-in" required>
                         </div>
                         <div class="form-group">
-                            <label for="hotel-check-out">Check-out</label>
+                            <label for="hotel-check-out">End date</label>
                             <input type="date" id="hotel-check-out" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="hotel-guests">Guests</label>
+                            <label for="hotel-guests">Adults</label>
                             <select id="hotel-guests" required>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -80,7 +32,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="hotel-rooms">Rooms</label>
+                            <label for="hotel-rooms">Kids</label>
                             <select id="hotel-rooms" required>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -88,7 +40,7 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label>&nbsp;</label>
+                            <label> </label>
                             <button type="submit" class="search-btn">Search Hotels</button>
                         </div>
                     </div>
@@ -103,173 +55,6 @@
     </section>
 
     <script>
-        // Autocomplete functionality for flights
-        async function fetchCitySuggestions(inputId, suggestionsId) {
-            const input = document.getElementById(inputId);
-            const suggestionsContainer = document.getElementById(suggestionsId);
-            let timeoutId;
-
-            input.addEventListener('input', async function () {
-                const keyword = this.value.trim();
-                clearTimeout(timeoutId);
-                if (keyword.length < 2) {
-                    suggestionsContainer.innerHTML = '';
-                    return;
-                }
-                timeoutId = setTimeout(async () => {
-                    try {
-                        const response = await fetch(`/flights/city-search?keyword=${encodeURIComponent(keyword)}`);
-                        const cities = await response.json();
-                        suggestionsContainer.innerHTML = '';
-                        if (cities.length) {
-                            cities.forEach(city => {
-                                const div = document.createElement('div');
-                                div.textContent = `${city.name} (${city.iataCode})`;
-                                div.className = 'suggestion';
-                                div.addEventListener('click', () => {
-                                    input.value = city.iataCode;
-                                    suggestionsContainer.innerHTML = '';
-                                });
-                                suggestionsContainer.appendChild(div);
-                            });
-                        } else {
-                            const div = document.createElement('div');
-                            div.textContent = 'No cities found';
-                            div.className = 'suggestion no-results';
-                            suggestionsContainer.appendChild(div);
-                        }
-                    } catch (error) {
-                        console.error('City search error:', error);
-                        suggestionsContainer.innerHTML = '<div class="suggestion no-results">Error fetching cities</div>';
-                    }
-                }, 300);
-            });
-
-            suggestionsContainer.addEventListener('mouseleave', () => {
-                suggestionsContainer.innerHTML = '';
-            });
-
-            input.addEventListener('blur', () => {
-                setTimeout(() => {
-                    suggestionsContainer.innerHTML = '';
-                }, 200);
-            });
-        }
-
-        // Initialize autocomplete for flights
-        fetchCitySuggestions('origin', 'origin-suggestions');
-        fetchCitySuggestions('destination', 'destination-suggestions');
-
-        // Flight search and pagination
-        let flights = [];
-        let currentFlightPage = 1;
-        const flightsPerPage = 10;
-
-        document.getElementById('flight-search-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
-
-            const origin = document.getElementById('origin').value.trim();
-            const destination = document.getElementById('destination').value.trim();
-            const checkIn = document.getElementById('check-in').value;
-            const checkOut = document.getElementById('check-out').value;
-            const guests = document.getElementById('guests').value;
-            const flightResults = document.getElementById('flight-results');
-            const flightList = document.getElementById('flight-list');
-            const flightPagination = document.getElementById('flight-pagination');
-
-            if (!origin || !destination || !checkIn || !checkOut || !guests) {
-                flightList.innerHTML = '<div class="no-results-message">Please fill all fields.</div>';
-                return;
-            }
-
-            flightResults.style.display = 'block';
-            flightList.innerHTML = '<p class="loading">Loading flights...</p>';
-            flightPagination.innerHTML = '';
-
-            try {
-                const response = await fetch('/flights/search-flights', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ origin, destination, checkIn, checkOut, guests }),
-                });
-                const data = await response.json();
-                flights = Array.isArray(data) ? data : [];
-                // Filter duplicates by flight.id
-                const uniqueFlights = [];
-                const seenIds = new Set();
-                flights.forEach(flight => {
-                    if (!seenIds.has(flight.id)) {
-                        seenIds.add(flight.id);
-                        uniqueFlights.push(flight);
-                    }
-                });
-                flights = uniqueFlights;
-
-                displayFlights();
-                updateFlightPagination();
-            } catch (error) {
-                console.error('Flight search error:', error);
-                flightList.innerHTML = '<div class="no-results-message">No flights found for your search</div>';
-            }
-        });
-
-        function displayFlights() {
-            const flightList = document.getElementById('flight-list');
-            const start = (currentFlightPage - 1) * flightsPerPage;
-            const end = start + flightsPerPage;
-            const paginatedFlights = flights.slice(start, end);
-
-            if (paginatedFlights.length === 0) {
-                flightList.innerHTML = '<div class="no-results-message">No flights found for your search</div>';
-                return;
-            }
-
-            flightList.innerHTML = '<h4>Flights</h4>';
-            paginatedFlights.forEach(flight => {
-                const price = flight.price?.total || 'N/A';
-                const itinerary = flight.itineraries[0]?.segments[0] || {};
-                const departureDate = new Date(itinerary.departure?.at || '');
-                const formattedDeparture = departureDate.toLocaleString('en-US', {
-                    month: 'long',
-                    day: 'numeric',
-                    year: 'numeric',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                });
-                flightList.innerHTML += `
-                    <div class="result-card">
-                        <p>Flight from ${itinerary.departure?.iataCode || 'Unknown'} to ${itinerary.arrival?.iataCode || 'Unknown'}</p>
-                        <p>Price: ${price} ${flight.price?.currency || ''}</p>
-                        <p>Departure: ${formattedDeparture}</p>
-                        <button class="explore-btn" onclick="bookFlight('${flight.id || ''}', ${price})">Book Now</button>
-                    </div>`;
-            });
-        }
-
-        function updateFlightPagination() {
-            const pagination = document.getElementById('flight-pagination');
-            const pageCount = Math.ceil(flights.length / flightsPerPage);
-            pagination.innerHTML = '';
-
-            for (let i = 1; i <= pageCount; i++) {
-                const button = document.createElement('button');
-                button.textContent = i;
-                button.className = 'pagination-btn' + (i === currentFlightPage ? ' active' : '');
-                button.addEventListener('click', () => {
-                    currentFlightPage = i;
-                    displayFlights();
-                    updateFlightPagination();
-                });
-                pagination.appendChild(button);
-            }
-        }
-
-        // Hotel search and pagination
-        let hotels = [];
-        let currentHotelPage = 1;
-        const hotelsPerPage = 10;
-
         // Autocomplete for hotel city
         async function fetchHotelCitySuggestions(inputId, suggestionsId) {
             const input = document.getElementById(inputId);
@@ -326,9 +111,59 @@
         // Initialize autocomplete for hotels
         fetchHotelCitySuggestions('hotel-city', 'hotel-city-suggestions');
 
-        document.getElementById('hotel-search-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
+        // Hotel search and pagination
+        let hotels = [];
+        let currentHotelPage = 1;
+        const hotelsPerPage = 10;
 
+        // Prefill form and fetch hotels from dashboard query
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cityCode = urlParams.get('destination');
+            const checkIn = urlParams.get('checkIn');
+            const checkOut = urlParams.get('checkOut');
+            const guests = urlParams.get('guests');
+            const rooms = urlParams.get('rooms');
+
+            if (cityCode && checkIn && checkOut && guests && rooms) {
+                document.getElementById('hotel-city').value = cityCode;
+                document.getElementById('hotel-check-in').value = checkIn;
+                document.getElementById('hotel-check-out').value = checkOut;
+                document.getElementById('hotel-guests').value = guests;
+                document.getElementById('hotel-rooms').value = rooms;
+
+                // Trigger search with prefilled data
+                searchHotels();
+            } else {
+                // Set default dates
+                const today = new Date().toISOString().split('T')[0];
+                document.getElementById('hotel-check-in').setAttribute('min', today);
+                document.getElementById('hotel-check-out').setAttribute('min', today);
+                document.getElementById('hotel-check-in').value = today;
+
+                const tomorrow = new Date();
+                tomorrow.setDate(tomorrow.getDate() + 1);
+                const tomorrowStr = tomorrow.toISOString().split('T')[0];
+                document.getElementById('hotel-check-out').value = tomorrowStr;
+
+                document.getElementById('hotel-guests').value = '1';
+                document.getElementById('hotel-rooms').value = '1';
+            }
+
+            // Date change handlers
+            document.getElementById('hotel-check-in').addEventListener('change', function () {
+                const checkInDate = new Date(this.value);
+                const checkOutDate = new Date(document.getElementById('hotel-check-out').value);
+                if (checkOutDate <= checkInDate) {
+                    const nextDay = new Date(checkInDate);
+                    nextDay.setDate(nextDay.getDate() + 1);
+                    document.getElementById('hotel-check-out').value = nextDay.toISOString().split('T')[0];
+                }
+                document.getElementById('hotel-check-out').setAttribute('min', this.value);
+            });
+        });
+
+        function searchHotels() {
             const cityCode = document.getElementById('hotel-city').value.trim();
             const checkIn = document.getElementById('hotel-check-in').value;
             const checkOut = document.getElementById('hotel-check-out').value;
@@ -347,27 +182,35 @@
             hotelList.innerHTML = '<p class="loading">Loading hotels...</p>';
             hotelPagination.innerHTML = '';
 
-            try {
-                const response = await fetch(`/api/hotels?cityCode=${encodeURIComponent(cityCode)}`);
-                const data = await response.json();
-                hotels = Array.isArray(data) ? data : [];
-                // Filter duplicates by hotelId
-                const uniqueHotels = [];
-                const seenIds = new Set();
-                hotels.forEach(hotel => {
-                    if (!seenIds.has(hotel.hotelId)) {
-                        seenIds.add(hotel.hotelId);
-                        uniqueHotels.push(hotel);
-                    }
-                });
-                hotels = uniqueHotels;
+            fetch(`/api/hotels?cityCode=${encodeURIComponent(cityCode)}`)
+                .then(res => {
+                    if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                    return res.json();
+                })
+                .then(data => {
+                    hotels = Array.isArray(data) ? data : [];
+                    const uniqueHotels = [];
+                    const seenIds = new Set();
+                    hotels.forEach(hotel => {
+                        if (hotel.hotelId && !seenIds.has(hotel.hotelId)) {
+                            seenIds.add(hotel.hotelId);
+                            uniqueHotels.push(hotel);
+                        }
+                    });
+                    hotels = uniqueHotels;
 
-                displayHotels();
-                updateHotelPagination();
-            } catch (error) {
-                console.error('Hotel search error:', error);
-                hotelList.innerHTML = '<div class="no-results-message">No hotels found for your search</div>';
-            }
+                    displayHotels();
+                    updateHotelPagination();
+                })
+                .catch(err => {
+                    console.error('Hotel search error:', err);
+                    hotelList.innerHTML = `<div class="no-results-message">No hotels found. Error: ${err.message}</div>`;
+                });
+        }
+
+        document.getElementById('hotel-search-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            searchHotels();
         });
 
         function displayHotels() {
@@ -381,15 +224,14 @@
                 return;
             }
 
-            hotelList.innerHTML = '<h4>Hotels</h4>';
+            hotelList.innerHTML = '<h4></h4>';
             paginatedHotels.forEach(hotel => {
                 const name = hotel.name || 'Unknown Hotel';
                 const cityCode = hotel.cityCode || 'Unknown';
                 hotelList.innerHTML += `
                     <div class="result-card">
                         <p>${name}</p>
-                        <p>City: ${cityCode}</p>
-                        <button class="explore-btn" onclick="bookHotel('${hotel.hotelId}', 0)">Book Now</button>
+                        <button class="explore-btn" onclick="bookHotel('${hotel.hotelId || ''}', 0)">Book Now</button>
                     </div>`;
             });
         }
@@ -412,93 +254,9 @@
             }
         }
 
-        // Booking functions
-        async function bookFlight(flightId, amount) {
-            try {
-                const response = await fetch('/flights/book', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ flightId, amount }),
-                });
-                const result = await response.json();
-                if (result.error) {
-                    alert(result.error);
-                } else {
-                    alert('Flight booking initiated! Implement payment flow with clientSecret: ' + result.clientSecret);
-                }
-            } catch (error) {
-                console.error('Flight booking error:', error);
-                alert('Failed to initiate flight booking');
-            }
+        // Booking function
+        function bookHotel(hotelId, amount) {
+            alert(`Hotel booking initiated for hotelId: ${hotelId}. Amount: ${amount}. Implement payment flow here.`);
         }
-
-        async function bookHotel(hotelId, amount) {
-            try {
-                alert(`Hotel booking initiated for hotelId: ${hotelId}. Implement payment flow with amount: ${amount}`);
-            } catch (error) {
-                console.error('Hotel booking error:', error);
-                alert('Failed to initiate hotel booking');
-            }
-        }
-
-        // Initialize default dates
-        document.addEventListener("DOMContentLoaded", function () {
-            const today = new Date().toISOString().split("T")[0];
-            document.getElementById("check-in").setAttribute("min", today);
-            document.getElementById("check-out").setAttribute("min", today);
-            document.getElementById("hotel-check-in").setAttribute("min", today);
-            document.getElementById("hotel-check-out").setAttribute("min", today);
-
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            const tomorrowStr = tomorrow.toISOString().split("T")[0];
-            document.getElementById("check-in").value = today;
-            document.getElementById("check-out").value = tomorrowStr;
-            document.getElementById("hotel-check-in").value = today;
-            document.getElementById("hotel-check-out").value = tomorrowStr;
-
-            document.getElementById("check-in").addEventListener("change", function () {
-                const checkInDate = new Date(this.value);
-                const checkOutDate = new Date(document.getElementById("check-out").value);
-                if (checkOutDate <= checkInDate) {
-                    const nextDay = new Date(checkInDate);
-                    nextDay.setDate(nextDay.getDate() + 1);
-                    document.getElementById("check-out").value = nextDay.toISOString().split("T")[0];
-                }
-                document.getElementById("check-out").setAttribute("min", this.value);
-            });
-
-            document.getElementById("hotel-check-in").addEventListener("change", function () {
-                const checkInDate = new Date(this.value);
-                const checkOutDate = new Date(document.getElementById("hotel-check-out").value);
-                if (checkOutDate <= checkInDate) {
-                    const nextDay = new Date(checkInDate);
-                    nextDay.setDate(nextDay.getDate() + 1);
-                    document.getElementById("hotel-check-out").value = nextDay.toISOString().split("T")[0];
-                }
-                document.getElementById("hotel-check-out").setAttribute("min", this.value);
-            });
-        });
-
-        // Inline CSS for pagination
-        const style = document.createElement('style');
-        style.textContent = `
-            .pagination-btn {
-                padding: 5px 10px;
-                margin: 0 5px;
-                border: 1px solid #ccc;
-                background: #f9f9f9;
-                cursor: pointer;
-            }
-            .pagination-btn.active {
-                background: #007bff;
-                color: white;
-                border-color: #007bff;
-            }
-            .pagination-btn:hover {
-                background: #e9ecef;
-            }
-        `;
-        document.head.appendChild(style);
-    </script>        
+    </script>
     <%- include('../partials/footer') %>

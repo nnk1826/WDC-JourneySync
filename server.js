@@ -5,6 +5,7 @@ const passport = require('passport');
 const sequelize = require('./config/db');
 const dotenv = require('dotenv');
 const path = require('path');
+const fetch = require('node-fetch'); // For Node.js < 18
 
 // Load environment variables
 dotenv.config({ path: path.join(__dirname, '.env') });
@@ -41,14 +42,57 @@ app.set('views', path.join(__dirname, 'views/pages'));
 app.use('/', require('./routes/auth'));
 app.use('/admin', require('./routes/admin'));
 app.use('/flights', require('./routes/flights'));
-app.use('/hotels', require('./routes/hotels'));
+app.use('/api/hotels', require('./routes/hotels'));
 
-// Itinerary route
-app.get('/itinerary', (req, res) => {
-  res.render('itinerary', {
-    user: req.user,
-    GOOGLE_MAPS_API_KEY: process.env.GOOGLE_MAPS_API_KEY || ''
-  });
+// Itinerary route with city code resolution
+app.get('/itinerary', async (req, res) => {
+  try {
+    const { destination, checkIn, checkOut, adults, kids } = req.query;
+
+    let cityCode = destination;
+
+    // Resolve city name to IATA code if needed
+    if (!/^[A-Z]{3}$/i.test(destination)) {
+      const cityResponse = await fetch(
+        `http://localhost:${process.env.PORT || 3000}/flights/city-search?keyword=${encodeURIComponent(destination)}`
+      );
+      const cities = await cityResponse.json();
+      cityCode = cities[0]?.iataCode || destination;
+    }
+
+    // Fetch hotels using resolved city code
+    const hotelResponse = await fetch(
+      `http://localhost:${process.env.PORT || 3000}/api/hotels?cityCode=${cityCode.toUpperCase()}`
+    );
+    const hotels = await hotelResponse.json();
+
+    res.render('itinerary', {
+      user: req.user,
+      searchParams: { destination, checkIn, checkOut, adults, kids },
+      hotels: hotels.data || []
+    });
+
+  } catch (error) {
+    console.error('Itinerary error:', error);
+    res.render('itinerary', {
+      error: 'Failed to load itinerary. Please try again.'
+    });
+  }
+});
+
+// Profile route
+app.get('/profile', (req, res) => {
+  console.log('Accessing /profile - Authenticated:', req.isAuthenticated());
+  console.log('User object:', req.user);
+
+  if (!req.isAuthenticated()) {
+    console.log('User not authenticated, redirecting to /login');
+    return res.redirect('/login');
+  }
+
+  // Ensure User object is passed with fallback values
+  const userData = req.user || { firstname: '', lastname: '', email: '' };
+  res.render('profile', { User: userData });
 });
 
 // Home route
