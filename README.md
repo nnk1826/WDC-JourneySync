@@ -76,7 +76,7 @@ Coordinates, distances, routes |
 | **Stripe API** | Dummy payment handling | Transaction ID, payment
 status |
 ---
-## �� File Structure (Selected Files)
+## File Structure (Selected Files)
 - `db.js` – MongoDB database configuration
 - `password.js` – Password hashing and comparison
 - `server.js` – Express server setup
@@ -85,7 +85,7 @@ status |
 `SavedItem.js`, `User.js` – Mongoose models
 - `package.json`, `package-lock.json` – Project dependencies 
 ---
-## 🛠 Known Bugs / Limitations
+## Known Bugs / Limitations
 - **API Rate Limits:** Some APIs have limited free-tier requests and may
 time out under high traffic.
 - **No Real Payments:** Stripe integration is for demo only. No actual
